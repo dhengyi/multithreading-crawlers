@@ -77,7 +77,7 @@ public class CreateIPProxyPool {
                     "待合并大小 ipMessages1：" + ipMessages1.size());
             ipMessages.addAll(ipMessages1);
             System.out.println("当前线程：" + Thread.currentThread().getName() + ", 已成功合并, " +
-                    "ipMessage1：" + ipMessages1.size());
+                    "合并后ipMessage大小：" + ipMessages.size());
             readWriteLock.writeLock().unlock();
         }
     }

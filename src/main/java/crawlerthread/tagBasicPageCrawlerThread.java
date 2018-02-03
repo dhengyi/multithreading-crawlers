@@ -6,6 +6,7 @@ import database.MyRedis;
 import parse.CommoditySearchPage;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -34,7 +35,7 @@ public class tagBasicPageCrawlerThread implements Runnable {
     public void run() {
         MyRedis myRedis = new MyRedis();
         // 抓取的带页面参数的主分类搜索页面URL暂存器
-        Queue<String> tempUrlsStorage = new LinkedList<>();
+        List<String> tempUrlsStorage = new LinkedList<>();
 
         String tagBasicUrl;
         IPMessage ipMessage = null;
@@ -83,9 +84,9 @@ public class tagBasicPageCrawlerThread implements Runnable {
             String html = HttpRequest.getHtmlByProxy(tagBasicUrl, ipMessage, redisLock);
             if (html != null) {
                 int pageCount = CommoditySearchPage.getPagesCount(html);
-                tempUrlsStorage.offer(tagBasicUrl);
+                tempUrlsStorage.add(tagBasicUrl);
                 if (pageCount >= 2) {
-                    tempUrlsStorage.offer(tagBasicUrl + "&s=44");
+                    tempUrlsStorage.add(tagBasicUrl + "&s=44");
                 }
                 flag = false;
             } else {
@@ -102,7 +103,7 @@ public class tagBasicPageCrawlerThread implements Runnable {
                     "待合并大小 tempUrlStorage：" + tempUrlsStorage.size());
             tagBasicPageUrls.addAll(tempUrlsStorage);
             System.out.println("当前线程：" + Thread.currentThread().getName() + ", 已成功合并, " +
-                    "tempUrlStorage：" + tempUrlsStorage.size());
+                    "合并后tagBasicPageUrls大小：" + tagBasicPageUrls.size());
         }
     }
 }

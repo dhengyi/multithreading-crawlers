@@ -24,9 +24,9 @@ public class MyRedis {
         // 首先将ipMessage进行序列化
         byte[] bytes = SerializeUtil.serialize(ipMessage);
 
-//        readWriteLock.writeLock().lock();
+        readWriteLock.writeLock().lock();
         jedis.rpush("ip-proxy-pool".getBytes(), bytes);
-//        readWriteLock.writeLock().unlock();
+        readWriteLock.writeLock().unlock();
     }
 
     // 将多个ip信息保存在Redis列表中
@@ -43,9 +43,9 @@ public class MyRedis {
 
     // 将Redis中保存的对象进行反序列化
     public IPMessage getIPByList() {
-//        readWriteLock.writeLock().lock();
+        readWriteLock.writeLock().lock();
         Object o = SerializeUtil.unserialize(jedis.lpop("ip-proxy-pool".getBytes()));
-//        readWriteLock.writeLock().unlock();
+        readWriteLock.writeLock().unlock();
 
         return (IPMessage) o;
     }
