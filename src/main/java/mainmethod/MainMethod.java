@@ -1,9 +1,12 @@
 package mainmethod;
 
 import database.MySQL;
+import urlbuild.GoodsUrl;
 import urlbuild.MainClassifyUrl;
 import ipproxypool.operation.IPProxyPool;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Queue;
 
 /**
@@ -13,7 +16,11 @@ import java.util.Queue;
  */
 
 public class MainMethod {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        //设置sout输出至文件
+        PrintStream ps = new PrintStream("/home/hg_yi/temp");
+        System.setOut(ps);
+
         // 创建生产者（ip-proxy-pool）与消费者 等待/通知机制所需的对象锁
         Object lock = new Object();
 
@@ -33,11 +40,14 @@ public class MainMethod {
         }
         System.out.println("共有" + tagBasicUrls.size() + "大小的URL待抓取");
 
-        // 拿到带有页面参数的基本分类商品的源链接（使用代理IP）
+        // 拿到带有页面参数的基本分类商品的源链接, 并保存在MySQL数据库中（使用代理IP）
         Queue<String> tagBasicPageURLs = MainClassifyUrl.getMainClassifyPageUrlsByProxy(tagBasicUrls, lock);
 
         // 将带有页面参数的基本分类商品URL进行持久化
-        MySQL.saveTagBasicPageUrlsToTagsSearchUrl(tagBasicPageURLs);
+//        MySQL.saveTagBasicPageUrlsToTagsSearchUrl(tagBasicPageURLs);
+
+        // 得到商品详情页的url，使用布隆过滤器，并及时持久化进MySQL数据库
+//        GoodsUrl.
 
         /**
          * 在每个分类下面提取600条商品url链接(使用多线程进行抓取)

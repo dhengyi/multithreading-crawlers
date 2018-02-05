@@ -28,31 +28,30 @@ public class CommoditySearchPage {
         return pageCount;
     }
 
-    // 拿到本分类商品中每个商品的id以构建商品详情页的url
-    public static List<String> getGoodsId(String html, List<String> id) {
-        String string = null;
-
-        // 使用正则表达式将本页所有商品的id提取出来（json数据串）
-        Pattern pattern = Pattern.compile("\"allNids\":\\[.*?\\]");
+    // 拿到本商品搜索页面中每个商品的id并构建商品详情页的url
+    public static void getGoodsUrl(String html, List<String> goodsDetailsPageUrls) {
+        // 使用正则表达式将本页所有商品的id提取出来（JSON数据串）
+        Pattern pattern = Pattern.compile("\"auctionNids\":\\[.*?\\]");
         Matcher matcher = pattern.matcher(html);
 
         if (matcher.find()) {
             // matcher.group()返回匹配到的子字符串
-            string = matcher.group();
+            String string = matcher.group();
+
+            int start = string.indexOf('[');
+            String idStr = string.substring(start+1, string.length()-1);
+
+            for (String idStars : idStr.split(",")) {
+                String singleId = idStars.substring(1, idStars.length()-1);
+                String goodsDetailsPageUrl = "https://detail.tmall.com/item.htm?id=" + singleId;
+
+                // 使用布隆过滤器，判断url是否重复
+
+
+                goodsDetailsPageUrls.add(goodsDetailsPageUrl);
+            }
+
+            // 使用布隆过滤器
         }
-
-        // 将每个商品id拿到,并构造为商品详情页的url
-        int start = string.indexOf('[');
-        String idStr = string.substring(start+1, string.length()-1);
-
-        for (String idStars : idStr.split(",")) {
-            String singleId = idStars.substring(1, idStars.length()-1);
-
-            String goodsUrl = "https://item.taobao.com/item.htm?id=" + singleId;
-
-            id.add(goodsUrl);
-        }
-
-        return id;
     }
 }

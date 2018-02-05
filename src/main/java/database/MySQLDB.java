@@ -31,7 +31,7 @@ public class MySQLDB {
         }
     }
 
-    // 得到数据库来链接
+    // 得到数据库链接
     public static Connection getConnection() {
         Connection conn = null;
         try {
@@ -39,6 +39,7 @@ public class MySQLDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return conn;
     }
 

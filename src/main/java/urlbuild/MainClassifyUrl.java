@@ -37,11 +37,9 @@ public class MainClassifyUrl {
         Queue<String> tagBasicPageURLs = new LinkedList<>();
         // 创建一个有关任务队列的对象锁
         Object taskLock = new Object();
-        // 创建一个有关Redis的对象锁
-        Object redisLock = new Object();
 
-        for (int i = 0; i < 40; i++) {
-            Thread thread = new Thread(new tagBasicPageCrawlerThread(tagBasicUrls, lock, tagBasicPageURLs, taskLock, redisLock));
+        for (int i = 0; i < 30; i++) {
+            Thread thread = new Thread(new tagBasicPageCrawlerThread(tagBasicUrls, lock, tagBasicPageURLs, taskLock));
             thread.setName("thread-tagBasicPageURL-" + i);
 
             threads.add(thread);

@@ -56,8 +56,9 @@ public class MyHttpResponse {
             e.printStackTrace();
         } finally {
             try {
-                assert httpResponse != null;
-                httpResponse.close();
+                if (httpResponse != null) {
+                    httpResponse.close();
+                }
                 httpClient.close();
             } catch (IOException e) {
                 e.printStackTrace();

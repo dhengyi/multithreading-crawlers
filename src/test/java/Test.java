@@ -1,5 +1,8 @@
-import ipproxypool.ipmodel.IPMessage;
-import database.MyRedis;
+import database.MySQL;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * @Author: spider_hgyi
@@ -9,9 +12,10 @@ import database.MyRedis;
  */
 public class Test {
     public static void main(String[] args) {
-        Object lock = new Object();
+        Set<Thread> threads = Thread.getAllStackTraces().keySet();
 
-        synchronized (lock) {
+        for (Thread thread : threads) {
+            System.out.println(thread.getName());
         }
     }
 }
