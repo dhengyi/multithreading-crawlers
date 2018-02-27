@@ -49,7 +49,7 @@ public class MyTimeJob extends TimerTask {
                         System.out.println(ipMessage.toString());
                     }
 
-                    // 构造种子url(4000条ip)
+                    // 构造种子url(2000条ip)
                     for (int i = 2; i <= 21; i++) {
                         urls.offer("http://www.xicidaili.com/nn/" + i);
                     }

@@ -1,5 +1,8 @@
 package parse;
 
+import utilclass.BloomFilter;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,8 +31,10 @@ public class CommoditySearchPage {
         return pageCount;
     }
 
-    // 拿到本商品搜索页面中每个商品的id并构建商品详情页的url
-    public static void getGoodsUrl(String html, List<String> goodsDetailsPageUrls) {
+    // 拿到本商品搜索页面中部分商品的id
+    public static List<String> getGoodsId(String html) {
+        List<String> goodsDetailsIds = new ArrayList<>();
+
         // 使用正则表达式将本页所有商品的id提取出来（JSON数据串）
         Pattern pattern = Pattern.compile("\"auctionNids\":\\[.*?\\]");
         Matcher matcher = pattern.matcher(html);
@@ -43,15 +48,10 @@ public class CommoditySearchPage {
 
             for (String idStars : idStr.split(",")) {
                 String singleId = idStars.substring(1, idStars.length()-1);
-                String goodsDetailsPageUrl = "https://detail.tmall.com/item.htm?id=" + singleId;
-
-                // 使用布隆过滤器，判断url是否重复
-
-
-                goodsDetailsPageUrls.add(goodsDetailsPageUrl);
+                goodsDetailsIds.add(singleId);
             }
-
-            // 使用布隆过滤器
         }
+
+        return goodsDetailsIds;
     }
 }

@@ -1,6 +1,7 @@
 package mainmethod;
 
 import database.MySQL;
+import mythread.TagBasicPageURLsCacheThread;
 import urlbuild.GoodsUrl;
 import urlbuild.MainClassifyUrl;
 import ipproxypool.operation.IPProxyPool;
@@ -17,52 +18,34 @@ import java.util.Queue;
 
 public class MainMethod {
     public static void main(String[] args) throws FileNotFoundException {
-        //设置sout输出至文件
-        PrintStream ps = new PrintStream("/home/hg_yi/temp");
-        System.setOut(ps);
+        // 设置sout输出至文件
+//        PrintStream ps = new PrintStream("/home/hg_yi/temp");
+//        System.setOut(ps);
 
-        // 创建生产者（ip-proxy-pool）与消费者 等待/通知机制所需的对象锁
+        // 创建生产者（ip-proxy-pool）与消费者（thread-tagBasicPageURL-i）等待/通知机制所需的对象锁
         Object lock = new Object();
+        // 创建 tagBasicPageURLs-cache 线程与 thread-GoodsDetailsUrl-i 线程协作所需的对象锁
+        Object tagBasicPageURLsCacheLock = new Object();
 
         // 创建一个 ip-proxy-pool 线程，执行IP代理池
         IPProxyPool.startExecute(lock);
 
         /**
-         * 使用等待/通知机制，如果此时ip-proxy-pool里面没IP，则进行等待，并让ip代理池
-         *  生产IP，直到生产完整，通知所有工作的线程继续开始工作
+         * 使用等待/通知机制，如果此时ip-proxy-pool里面没IP，则进行等待，并让IP代理池
+         * 生产IP，直到生产完整，通知所有工作的线程继续开始工作
          */
 
         // 拿到淘宝基本分类商品的源链接（使用本机IP）
-        Queue<String> tagBasicUrls = MainClassifyUrl.getMainClassifyUrls();
-
-        for (String tagBasicUrl : tagBasicUrls) {
-            System.out.println(tagBasicUrl);
-        }
-        System.out.println("共有" + tagBasicUrls.size() + "大小的URL待抓取");
+//        Queue<String> tagBasicUrls = MainClassifyUrl.getMainClassifyUrls();
+//        System.out.println("共有" + tagBasicUrls.size() + "大小的URL待抓取");
 
         // 拿到带有页面参数的基本分类商品的源链接, 并保存在MySQL数据库中（使用代理IP）
-        Queue<String> tagBasicPageURLs = MainClassifyUrl.getMainClassifyPageUrlsByProxy(tagBasicUrls, lock);
+//        Queue<String> tagBasicPageURLs = MainClassifyUrl.getMainClassifyPageUrlsByProxy(tagBasicUrls, lock);
 
-        // 将带有页面参数的基本分类商品URL进行持久化
-//        MySQL.saveTagBasicPageUrlsToTagsSearchUrl(tagBasicPageURLs);
+        // 创建一个 tagBasicPageURLs-cache 线程，每抓取成功100个任务，就将MySQL中存储的任务标记为true
+        TagBasicPageURLsCacheThread.start(tagBasicPageURLsCacheLock);
 
         // 得到商品详情页的url，使用布隆过滤器，并及时持久化进MySQL数据库
-//        GoodsUrl.
-
-        /**
-         * 在每个分类下面提取600条商品url链接(使用多线程进行抓取)
-         *
-         * 基本思路：使用多线程进行网页请求和网页解析，将url链接拿到之后进行该线程对数据库
-         * 的写操作（注意同步操作），需要注意的是当一个线程完成任务之后，如何给它分配新的任务
-         * 保证线程到最后都没有空闲下来。
-         */
-
-        /**
-         * 创建线程池，本系统可用的处理器核心数为4，由于爬虫是IO密集型任务，所以我们合理分配
-         * 线程池的大小。
-         */
-
-        //使用多线程进行商品详情页的url提取
-//        ThreadPoolCrawler.getGoodsTasks(strings);
+        GoodsUrl.getGoodsDetailsPageUrl(lock, tagBasicPageURLsCacheLock);
     }
 }

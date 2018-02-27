@@ -1,6 +1,6 @@
 package urlbuild;
 
-import crawlerthread.tagBasicPageCrawlerThread;
+import mythread.TagBasicPageCrawlerThread;
 import httpbrower.HttpRequest;
 import parse.TagsPage;
 
@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by hg_yi on 17-5-23.
@@ -39,7 +37,7 @@ public class MainClassifyUrl {
         Object taskLock = new Object();
 
         for (int i = 0; i < 30; i++) {
-            Thread thread = new Thread(new tagBasicPageCrawlerThread(tagBasicUrls, lock, tagBasicPageURLs, taskLock));
+            Thread thread = new Thread(new TagBasicPageCrawlerThread(tagBasicUrls, lock, tagBasicPageURLs, taskLock));
             thread.setName("thread-tagBasicPageURL-" + i);
 
             threads.add(thread);

@@ -15,8 +15,7 @@ import java.io.IOException;
 /**
  * Created by hg_yi on 17-5-23.
  *
- * @@Description: 对淘宝页面的请求，得到页面的源码
- * <p>
+ * @Description: 对淘宝页面的请求，得到页面的源码
  * setConnectTimeout：设置连接超时时间，单位毫秒.
  * setSocketTimeout：请求获取数据的超时时间，单位毫秒.如果访问一个接口，
  * 多少时间内无法返回数据，就直接放弃此次调用。
@@ -104,8 +103,6 @@ public class HttpRequest {
 
         try {
             // 客户端执行httpGet方法，返回响应
-            System.out.println("当前线程：" + Thread.currentThread().getName() + ", 正在准备对：" + requestUrl +
-                    ", 进行httpResponse... ...会进行阻塞吗... ...");
             httpResponse = closeableHttpClient.execute(httpGet);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
 

@@ -1,4 +1,4 @@
-package crawlerthread;
+package mythread;
 
 import database.MySQL;
 import httpbrower.HttpRequest;
@@ -7,7 +7,6 @@ import database.MyRedis;
 import parse.CommoditySearchPage;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -16,13 +15,13 @@ import java.util.Queue;
  * @Modified By:
  * @Description: 得到带有分页参数的主分类搜索页面的URL
  */
-public class tagBasicPageCrawlerThread implements Runnable {
+public class TagBasicPageCrawlerThread implements Runnable {
     private final Object lock;              // 有关生产者、消费者的锁
     private Queue<String> tagBasicUrls;     // 任务队列（共享变量）
     private final Object taskLock;          // 有关任务队列的锁
     private Queue<String> tagBasicPageUrls; // 存放所有线程抓取结果的共享队列（共享变量）
 
-    public tagBasicPageCrawlerThread(Queue<String> tagBasicUrls, Object lock, Queue<String> tagBasicPageUrls,
+    public TagBasicPageCrawlerThread(Queue<String> tagBasicUrls, Object lock, Queue<String> tagBasicPageUrls,
                                      Object taskLock) {
         this.tagBasicUrls = tagBasicUrls;
         this.lock = lock;
