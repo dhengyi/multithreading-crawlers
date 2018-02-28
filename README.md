@@ -43,6 +43,11 @@ MySQL配置文件下载（附带数据）：
 ## 版本说明
 ![version 1.0][3]
 
+## Contact me
+```
+spider_hgyi@outlook.com
+```
+
 
   [1]: https://github.com/championheng/ip-proxy-pools-regularly/tree/master/ip%E4%BB%A3%E7%90%86%E4%B8%8E%E5%AE%9A%E7%82%B9%E7%88%AC%E5%8F%96%28%E9%87%8D%E6%9E%84%29
   [2]: https://1drv.ms/u/s!Alo1-VlEZGPPdzh2W4s-Nvdhvzs
