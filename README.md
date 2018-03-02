@@ -27,11 +27,13 @@ parse | 网页源码解析类
 urlbuild | URL创建类
 utilclass | 工具类
 
-关于项目实现的技术细节，本人打算另写一篇博客来进行专门的讲解，到时给这里再贴上超链... ...
+项目中的每个类我都写了Description，如果你在使用的过程中还有任何疑问，欢迎与我联系，[Contact me](#contactme)。
+
+关于项目实现的技术细节，请戳博客链接：[Java网络爬虫（十四）--多线程爬虫（抓取淘宝商品详情页URL）][2]
 
 ## 使用说明
 MySQL配置文件下载（附带数据）：
-[![xiyoulinux.sql][4]][2]
+[![xiyoulinux.sql][3]][4]
 
 ## TODO
 1. 项目中抓取带有页面参数的商品搜索页URL及商品详情页URL会产生死锁，分别是近2000与近4000数量的待抓取任务，然而每次都会剩余不到10个任务无法成功抓取，目前猜测有可能是死锁，也有可能是由HttpClient包引起的未知bug
@@ -41,7 +43,7 @@ MySQL配置文件下载（附带数据）：
 5. 可视化处理... ...
 
 ## 版本说明
-![version 1.0][3]
+![version 1.0][5]
 
 ## Contact me
 ```
@@ -50,6 +52,7 @@ spider_hgyi@outlook.com
 
 
   [1]: https://github.com/championheng/ip-proxy-pools-regularly/tree/master/ip%E4%BB%A3%E7%90%86%E4%B8%8E%E5%AE%9A%E7%82%B9%E7%88%AC%E5%8F%96%28%E9%87%8D%E6%9E%84%29
-  [2]: https://1drv.ms/u/s!Alo1-VlEZGPPdzh2W4s-Nvdhvzs
-  [3]: https://img.shields.io/badge/version-1.0-blue.svg
-  [4]: https://img.shields.io/badge/download-MySQL-brightgreen.svg
+  [2]: http://blog.csdn.net/championhengyi/article/details/79416748
+  [3]: https://img.shields.io/badge/download-MySQL-brightgreen.svg
+  [4]: https://1drv.ms/u/s!Alo1-VlEZGPPdzh2W4s-Nvdhvzs
+  [5]: https://img.shields.io/badge/version-1.0-blue.svg
