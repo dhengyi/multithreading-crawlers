@@ -27,7 +27,7 @@ parse | 网页源码解析类
 urlbuild | URL创建类
 utilclass | 工具类
 
-项目中的每个类我都写了Description，如果你在使用的过程中还有任何疑问，欢迎与我联系，[Contact me](#Contactme)。
+项目中的每个类我都写了Description，如果你在使用的过程中还有任何疑问，欢迎[与我联系](#联系我)。
 
 关于项目实现的技术细节，请戳博客链接：[Java网络爬虫（十四）--多线程爬虫（抓取淘宝商品详情页URL）][2]
 
@@ -45,7 +45,7 @@ MySQL配置文件下载（附带数据）：
 ## 版本说明
 ![version 1.0][5]
 
-## Contact me
+## 联系我
 ```
 spider_hgyi@outlook.com
 ```
